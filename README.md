@@ -19,10 +19,10 @@ npm install rsync-source
 
 ```typescript
 // import
-import { move, syncWatch } from '../src/rsync-source'
+import { move, sync } from '../src/rsync-source'
 
 // use
-syncWatch('./my-libs-source', './my-project/src/libs', 'my-lib')
+sync('./my-libs-source', './my-project/src/libs', 'my-lib')
 ```
 
 ### Attention
