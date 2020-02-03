@@ -2,6 +2,8 @@ var watch = require('node-watch');
 var exec = require('child_process').exec;
 var term = require('terminal-kit').terminal;
 var fs = require('fs');
+var args = process.argv.slice(2);
+var w: boolean = args.indexOf("--watch") > -1 || args.indexOf("-w") > -1;
 
 export async function move(source: string, dest: string, del: boolean = false) {
   return new Promise((resolve, reject) => {
@@ -14,19 +16,25 @@ export async function move(source: string, dest: string, del: boolean = false) {
     });
   });
 }
-export async function syncWatch(source: string, dest: string, folder: string) {
+export async function sync(source: string, dest: string, folder: string) {
   if (!fs.existsSync(`${dest}/${folder}`)) { fs.mkdirSync(`${dest}/${folder}`); }
-  move(`${source}/${folder}`, dest, true).then(() => {
-    move(`${dest}/${folder}`, source, false)
-      .then(() => {
-        term.eraseLine().column(0);
-        term.bold.green(' Watching\t\t\t\t\t').column(0);
-        watch(`${source}/${folder}`, { recursive: true }, (evt: any, name: any) => {
-          move(`${source}/${folder}`, dest, true);
+  return new Promise((res, rej) => {
+    move(`${source}/${folder}`, dest, true).then(() => {
+      move(`${dest}/${folder}`, source, false)
+        .then(() => {
+          term.eraseLine().column(0);
+          term.bold.green(' Watching\t\t\t\t\t').column(0);
+          if (w) {
+            watch(`${source}/${folder}`, { recursive: true }, (evt: any, name: any) => {
+              move(`${source}/${folder}`, dest, true);
+            });
+            watch(`${dest}/${folder}`, { recursive: true }, (evt: any, name: any) => {
+              move(`${dest}/${folder}`, source);
+            });
+          } else {
+            res();
+          }
         });
-        watch(`${dest}/${folder}`, { recursive: true }, (evt: any, name: any) => {
-          move(`${dest}/${folder}`, source);
-        });
-      });
+    });
   });
 }
