@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "ES6",
+    "module": "ESNext",
+    "lib": [
+      "ES6",
+      "ES2018.Promise",
+      "ES2018.Intl",
+      "ES2018.AsyncIterable",
+      "ES2015",
+      "ES2016",
+      "ES2018",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "strict": true,
+    "sourceMap": true,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declarationDir": "dist/types",
+    "outDir": "dist/lib",
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}
