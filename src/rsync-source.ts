@@ -1,11 +1,14 @@
 // import { existsSync, mkdirSync, readFile, writeFile, readdir, statSync } from "fs-extra";
-import fs from "fs-extra";
+// import fs from "fs-extra";
+// import fs from "fs-extra";
+const fs: typeof import("fs-extra") = require("fs-extra");
 // const { existsSync, mkdirSync, readFile, writeFile, readdir, statSync } = require("fs-extra");
-const watch = require('node-watch');
-const exec = require('child_process').exec;
-const term = require('terminal-kit').terminal;
-const minify = require('@node-minify/core');
-const cleanCSS = require('@node-minify/clean-css');
+const watch: any = require('node-watch');
+const exec: typeof import("child_process").exec = require('child_process').exec;
+const term: typeof import("terminal-kit").terminal = require('terminal-kit').terminal;
+const minify: any = require('@node-minify/core');
+const cleanCSS: any = require('@node-minify/clean-css');
+const path: typeof import("path") = require("path");
 import { join } from "path";
 
 var args = process.argv.slice(2);
@@ -15,6 +18,9 @@ var w: boolean = args.indexOf("--watch") > -1 || args.indexOf("-w") > -1;
 export async function copyFolderTo(folderPath: string, to: string, del: boolean = false) {
   return new Promise((resolve, reject) => {
     exec(`rsync -raRP ${del ? "--del" : ""} ${folderPath} ${to}`, (err: any, stdout: any, stderr: any) => {
+      if(err) {
+        term.red(err);
+      }
       resolve();
     });
   });

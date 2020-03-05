@@ -4,4 +4,5 @@ import { sync, copyFolderTo, replaceManyInDir } from "../src/rsync-source";
     await replaceManyInDir("./some-other-folder", [
         ["baseCollection", "anotherBaseCollection"]
     ]);
+    console.log("done");
 })();
