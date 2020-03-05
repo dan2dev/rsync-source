@@ -1,4 +1,4 @@
-import { move, syncWatch } from "../src/rsync-source"
+import { copyFolderTo } from "../src/rsync-source"
 
 describe("move testing", () => {
   it("works if true is truthy", () => {

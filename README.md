@@ -4,7 +4,7 @@
 [![Dev Dependencies](https://david-dm.org/dan2dev/rsync-source/dev-status.svg)](https://david-dm.org/dan2dev/rsync-source?type=dev)
 [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://paypal.me/dan2dev)
 
-A simple but efficient way to sync directories using 'rsync'.
+A library that helps you reuse files in multiples projects without using symlink.
 
 ### Installation
 
@@ -16,10 +16,10 @@ npm install rsync-source
 
 ```typescript
 // import
-import { move, sync } from '../src/rsync-source'
+import { copyFolderTo } from '../src/rsync-source'
 
 // use
-sync('./my-libs-source', './my-project/src/libs', 'my-lib')
+copyFolderTo("./some-folder", "./some-other-folder", false);
 ```
 
 ### Attention
