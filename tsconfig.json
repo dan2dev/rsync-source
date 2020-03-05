@@ -3,6 +3,7 @@
     "moduleResolution": "node",
     "target": "ES6",
     "module": "CommonJS",
+    "allowJs": true,
     "lib": [
       "ES6",
       "ES2018.Promise",

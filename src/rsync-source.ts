@@ -1,4 +1,6 @@
-import { existsSync, mkdirSync, readFile, writeFile, readdir, statSync } from "fs-extra";
+// import { existsSync, mkdirSync, readFile, writeFile, readdir, statSync } from "fs-extra";
+import fs from "fs-extra";
+// const { existsSync, mkdirSync, readFile, writeFile, readdir, statSync } = require("fs-extra");
 const watch = require('node-watch');
 const exec = require('child_process').exec;
 const term = require('terminal-kit').terminal;
@@ -30,7 +32,7 @@ export async function sync(options: SyncOptions) {
     del = options.del !== undefined ? options.del : false;
   folders.forEach((folder) => {
     term.bold.green(`sync: \t${source} ${dest}/${folder}`);
-    if (!existsSync(`${dest}/${folder}`)) { mkdirSync(`${dest}/${folder}`); }
+    if (!fs.existsSync(`${dest}/${folder}`)) { fs.mkdirSync(`${dest}/${folder}`); }
     return new Promise((res, rej) => {
       copyFolderTo(`${source}/${folder}`, dest, del).then(() => {
         if (w) {
@@ -52,7 +54,7 @@ export function hasArg(arg: string): boolean {
 /* #endregion */
 /* #region simple replace */
 export async function replaceManyInFile(path: string, replacements: string[][]) {
-  readFile(path, 'utf8', (err: any, data: string) => {
+  fs.readFile(path, 'utf8', (err: any, data: string) => {
     if (err) { return console.log("ERROR: ", err); }
     var newData = data;
     replacements.forEach(item => {
@@ -61,17 +63,17 @@ export async function replaceManyInFile(path: string, replacements: string[][]) 
       var regex = new RegExp(search, 'g');
       newData = newData.replace(regex, replacement);
     });
-    writeFile(path, newData, 'utf8', function (err: any) {
+    fs.writeFile(path, newData, 'utf8', function (err: any) {
       if (err) return console.log("ERROR: ", err);
     });
   });
 }
 export async function replaceManyInDir(pathDir: string, replacements: string[][]) {
-  readdir(pathDir, (err, paths) => {
+  fs.readdir(pathDir, (err, paths) => {
     if (err) return;
     paths.forEach(subPath => {
       const subPathFull = join(pathDir, subPath);
-      if (statSync(subPathFull).isFile()) {
+      if (fs.statSync(subPathFull).isFile()) {
         replaceManyInFile(subPathFull, replacements);
       } else {
         replaceManyInDir(subPathFull, replacements);
@@ -82,11 +84,11 @@ export async function replaceManyInDir(pathDir: string, replacements: string[][]
 /* #endregion sas */
 /* #region regex replace in file */
 export async function regexReplaceInFile(path: string, regex: RegExp, replace: string) {
-  readFile(path, 'utf8', (err: any, data: string) => {
+  fs.readFile(path, 'utf8', (err: any, data: string) => {
     if (err) { return console.log("ERROR: ", err); }
     var newData = data;
     newData = newData.replace(regex, replace);
-    writeFile(path, newData, 'utf8', function (err: any) {
+    fs.writeFile(path, newData, 'utf8', function (err: any) {
       if (err) return console.log("ERROR: ", err);
     });
   });
