@@ -40,7 +40,8 @@ export async function sync(options: SyncOptions) {
     del = options.del !== undefined ? options.del : false;
   folders.forEach((folder) => {
     term.bold.green(`sync: \t${source} ${dest}/${folder}`);
-    if (!fs.existsSync(`${dest}/${folder}`)) { fs.mkdirSync(`${dest}/${folder}`); }
+    fs.ensureDirSync(path.resolve(`${dest}/${folder}`));
+    // if (!fs.existsSync(`${dest}/${folder}`)) { fs.mkdirSync(`${dest}/${folder}`); }
     return new Promise((res, rej) => {
       copyFolderTo(`${source}/${folder}`, dest, del).then(() => {
         if (w) {
