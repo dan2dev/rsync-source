@@ -8,7 +8,7 @@ import { sync, copyFolderTo, replaceManyInDir } from "../src/rsync-source";
         del: true
     });
     */
-    await copyFolderTo("./test/some-folder", "./test/some-other-folder", false);
+    await copyFolderTo("./test/some-folder", "./test/some-other-folder/something/s", false);
     await replaceManyInDir("./some-other-folder", [
         ["baseCollection", "anotherBaseCollection"]
     ]);

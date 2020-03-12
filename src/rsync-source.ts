@@ -16,6 +16,7 @@ var w: boolean = args.indexOf("--watch") > -1 || args.indexOf("-w") > -1;
 
 /* #region rsync helpers */
 export async function copyFolderTo(folderPath: string, to: string, del: boolean = false) {
+  fs.ensureDirSync(path.resolve(to));
   return new Promise((resolve, reject) => {
     // exec(`rsync -raRP ${del ? "--del" : ""} ${folderPath} ${to}`, (err: any, stdout: any, stderr: any) => {
     exec(`rsync -rl --update ${del ? "--del" : ""} ${folderPath} ${to}`, (err: any, stdout: any, stderr: any) => {
