@@ -1,6 +1,6 @@
 {
   "name": "rsync-source",
-  "version": "2.9.1",
+  "version": "2.9.2",
   "description": "",
   "keywords": [],
   "main": "dist/rsync-source.umd.js",
