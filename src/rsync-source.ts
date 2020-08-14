@@ -16,11 +16,13 @@ var w: boolean = args.indexOf("--watch") > -1 || args.indexOf("-w") > -1;
 
 /* #region rsync helpers */
 export async function copyFolderTo(folderPath: string, to: string, del: boolean = false) {
-  fs.ensureDirSync(path.resolve(to));
+  if (to.indexOf(":") === -1) {
+    fs.ensureDirSync(path.resolve(to));
+  }
   return new Promise((resolve, reject) => {
     // exec(`rsync -raRP ${del ? "--del" : ""} ${folderPath} ${to}`, (err: any, stdout: any, stderr: any) => {
     exec(`rsync -rl --update ${del ? "--del" : ""} ${folderPath} ${to}`, (err: any, stdout: any, stderr: any) => {
-      if(err) {
+      if (err) {
         term.red(err);
       }
       resolve();
@@ -40,7 +42,9 @@ export async function sync(options: SyncOptions) {
     del = options.del !== undefined ? options.del : false;
   folders.forEach((folder) => {
     term.bold.green(`sync: \t${source} ${dest}/${folder}`);
-    fs.ensureDirSync(path.resolve(`${dest}/${folder}`));
+    if (dest.indexOf(":") === -1) {
+      fs.ensureDirSync(path.resolve(`${dest}/${folder}`));
+    }
     // if (!fs.existsSync(`${dest}/${folder}`)) { fs.mkdirSync(`${dest}/${folder}`); }
     return new Promise((res, rej) => {
       copyFolderTo(`${source}/${folder}`, dest, del).then(() => {
