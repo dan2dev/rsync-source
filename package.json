@@ -126,6 +126,6 @@
     "@types/terminal-kit": "^1.28.2",
     "fs-extra": "^9.0.1",
     "node-watch": "^0.6.4",
-    "terminal-kit": "^1.42.0"
+    "terminal-kit": "^3.0.0"
   }
 }
